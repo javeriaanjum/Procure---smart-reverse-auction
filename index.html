@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ProCure | Smart Procurement Platform</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fb;
+            color: #172554;
+        }
+
+        /* Navigation bar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+            color: #1d4ed8;
+        }
+
+        .logo span {
+            color: #172554;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .nav-login {
+            padding: 10px 18px;
+            border: 1px solid #2563eb;
+            border-radius: 7px;
+        }
+
+        /* Main hero section */
+        .hero {
+            text-align: center;
+            padding: 75px 20px 45px;
+            background: linear-gradient(135deg, #eff6ff, #ffffff);
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 13px;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0 auto 28px;
+            color: #64748b;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .primary-button {
+            display: inline-block;
+            background-color: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .primary-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        /* Account selection */
+        .accounts {
+            padding: 35px 8% 65px;
+            text-align: center;
+        }
+
+        .accounts h2 {
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .section-description {
+            color: #64748b;
+            margin-bottom: 32px;
+        }
+
+        .account-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .account-card {
+            background-color: white;
+            flex: 1;
+            padding: 35px 28px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            text-align: left;
+            box-shadow: 0 5px 20px rgba(15, 23, 42, 0.04);
+            transition: transform 0.2s;
+        }
+
+        .account-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .account-icon {
+            font-size: 35px;
+            margin-bottom: 18px;
+        }
+
+        .account-card h3 {
+            font-size: 23px;
+            margin-bottom: 12px;
+        }
+
+        .account-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .account-card ul {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .account-card li {
+            margin-bottom: 12px;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .account-card li::before {
+            content: "✓ ";
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .account-button {
+            display: block;
+            text-align: center;
+            padding: 13px;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+        }
+
+        .customer-button {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .seller-button {
+            background-color: white;
+            color: #2563eb;
+            border: 1px solid #2563eb;
+        }
+
+        /* How it works */
+        .how-it-works {
+            background-color: white;
+            padding: 55px 8%;
+            text-align: center;
+        }
+
+        .how-it-works h2 {
+            font-size: 30px;
+            margin-bottom: 35px;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        .step {
+            flex: 1;
+            max-width: 280px;
+            padding: 20px;
+        }
+
+        .step-number {
+            background-color: #dbeafe;
+            color: #1d4ed8;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .step h3 {
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #172554;
+            color: white;
+            font-size: 14px;
+        }
+
+        /* Mobile-friendly layout */
+        @media (max-width: 700px) {
+            nav {
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .nav-links a {
+                margin: 0 7px;
+                font-size: 13px;
+            }
+
+            .hero h1 {
+                font-size: 35px;
+            }
+
+            .account-container,
+            .steps {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .account-card {
+                width: 100%;
+            }
+
+            .step {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Pro<span>Cure</span></div>
+
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#how-it-works">How It Works</a>
+            <a href="#accounts">Get Started</a>
+            <a href="#accounts" class="nav-login">Login / Register</a>
+        </div>
+    </nav>
+
+    <!-- Hero section -->
+    <section class="hero">
+        <div class="badge">SMART REVERSE AUCTION SYSTEM</div>
+
+        <h1>Smart Procurement.<br>
+            <span>Better Deals.</span>
+        </h1>
+
+        <p>
+            Connect buyers with suppliers through a smarter procurement
+            platform. Post your requirements, receive competitive quotations,
+            compare offers, and choose the deal that works best for you.
+        </p>
+
+        <a href="#accounts" class="primary-button">
+            Get Started →
+        </a>
+    </section>
+
+    <!-- Customer and Seller accounts -->
+    <section class="accounts" id="accounts">
+
+        <h2>How would you like to continue?</h2>
+
+        <p class="section-description">
+            Choose the account that best describes you.
+        </p>
+
+        <div class="account-container">
+
+            <!-- Customer card -->
+            <div class="account-card">
+
+                <div class="account-icon">🛒</div>
+
+                <h3>I'm a Customer</h3>
+
+                <p>
+                    Find the products you need and receive competitive
+                    quotations from multiple suppliers.
+                </p>
+
+                <ul>
+                    <li>Post product requirements</li>
+                    <li>Receive supplier quotations</li>
+                    <li>Compare prices and delivery</li>
+                    <li>Select the best offer</li>
+                </ul>
+
+                <a href="customer-login.html"
+                   class="account-button customer-button">
+                    Continue as Customer →
+                </a>
+
+            </div>
+
+            <!-- Seller card -->
+            <div class="account-card">
+
+                <div class="account-icon">🏪</div>
+
+                <h3>I'm a Seller</h3>
+
+                <p>
+                    Discover customer requirements and submit competitive
+                    quotations to win business.
+                </p>
+
+                <ul>
+                    <li>Browse customer requirements</li>
+                    <li>Submit product quotations</li>
+                    <li>Manage submitted offers</li>
+                    <li>Track accepted orders</li>
+                </ul>
+
+                <a href="seller-login.html"
+                   class="account-button seller-button">
+                    Continue as Seller →
+                </a>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- How ProCure works -->
+    <section class="how-it-works" id="how-it-works">
+
+        <h2>How ProCure Works</h2>
+
+        <div class="steps">
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Post a Requirement</h3>
+                <p>
+                    Customers describe the products, quantities,
+                    and delivery requirements they need.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Receive Quotations</h3>
+                <p>
+                    Sellers review the requirements and submit
+                    their prices and delivery offers.
+                </p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Compare & Choose</h3>
+                <p>
+                    Customers compare the available quotations
+                    and select their preferred offer.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 ProCure | Smart Reverse Auction System</p>
+    </footer>
+
+</body>
+</html>

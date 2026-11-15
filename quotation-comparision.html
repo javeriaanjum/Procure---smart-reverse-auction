@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ProCure | Compare Quotations</title>
+
+<style>
+:root {
+    --navy: #123b43;
+    --teal: #147d78;
+    --orange: #f49b45;
+    --bg: #f4f7f8;
+    --white: #ffffff;
+    --text: #24383e;
+    --muted: #718087;
+    --border: #e2e9eb;
+    --green: #18734f;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 235px;
+    flex-shrink: 0;
+    background: var(--navy);
+    color: white;
+    padding: 28px 18px;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: bold;
+    margin: 0 0 8px 10px;
+}
+
+.logo span {
+    color: var(--orange);
+}
+
+.tagline {
+    color: #b9ced0;
+    font-size: 12px;
+    margin: 0 0 35px 10px;
+}
+
+.nav-item {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #e0ebec;
+    padding: 13px 12px;
+    margin: 5px 0;
+    border-radius: 8px;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: #24545b;
+}
+
+.main {
+    flex: 1;
+    min-width: 0;
+    padding: 30px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 28px;
+}
+
+.header h1 {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.demo-badge {
+    background: #fff0df;
+    color: #9b591b;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.section {
+    margin-bottom: 28px;
+    scroll-margin-top: 20px;
+}
+
+.section-heading {
+    margin-bottom: 16px;
+}
+
+.section-heading h2 {
+    font-size: 20px;
+    margin-bottom: 7px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 22px;
+}
+
+.request-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.summary-label {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.summary-value {
+    font-size: 15px;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.toolbar input,
+.toolbar select {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    font: inherit;
+    outline-color: var(--teal);
+}
+
+.toolbar input {
+    flex: 1;
+    min-width: 180px;
+}
+
+.toolbar select {
+    min-width: 190px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+th {
+    background: #edf4f4;
+    color: var(--navy);
+    text-align: left;
+    padding: 16px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+td {
+    padding: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    vertical-align: middle;
+}
+
+tbody tr:hover {
+    background: #f8fbfb;
+}
+
+.supplier-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.supplier-type {
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.price {
+    color: var(--teal);
+    font-weight: bold;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.lowest-tag {
+    display: inline-block;
+    background: #e0f3eb;
+    color: var(--green);
+    font-size: 10px;
+    font-weight: bold;
+    padding: 5px 7px;
+    border-radius: 20px;
+    margin-top: 6px;
+}
+
+.product-image {
+    width: 75px;
+    height: 65px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #f4f7f8;
+    object-fit: cover;
+}
+
+.no-image {
+    width: 75px;
+    height: 65px;
+    border-radius: 8px;
+    border: 1px dashed #cbd7da;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--muted);
+    font-size: 11px;
+    text-align: center;
+}
+
+.button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 13px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.button-primary {
+    background: var(--teal);
+    color: white;
+}
+
+.button-primary:hover {
+    background: #106963;
+}
+
+.button-light {
+    background: #eaf1f2;
+    color: var(--navy);
+}
+
+.button:disabled {
+    background: #dce9e5;
+    color: #42685e;
+    cursor: default;
+}
+
+.rating {
+    color: #a56a17;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.notice {
+    background: #fff7e9;
+    border: 1px solid #f5dfb9;
+    border-radius: 10px;
+    padding: 15px;
+    color: #765322;
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 35px;
+    color: var(--muted);
+    line-height: 1.7;
+}
+
+.selection-panel {
+    display: none;
+    margin-top: 18px;
+    background: #eaf6f1;
+    border: 1px solid #c9e8d9;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.selection-panel h3 {
+    color: var(--green);
+    margin-bottom: 8px;
+}
+
+.selection-panel p {
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+footer {
+    color: var(--muted);
+    font-size: 12px;
+    text-align: center;
+    padding: 20px 0 5px;
+}
+
+@media (max-width: 850px) {
+    .sidebar {
+        width: 190px;
+    }
+
+    .request-summary {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .layout {
+        display: block;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding: 18px;
+    }
+
+    .tagline {
+        margin-bottom: 12px;
+    }
+
+    .sidebar nav {
+        display: flex;
+        gap: 5px;
+        overflow-x: auto;
+    }
+
+    .nav-item {
+        width: auto;
+        white-space: nowrap;
+    }
+
+    .main {
+        padding: 18px;
+    }
+
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .request-summary {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="logo">Pro<span>Cure</span></div>
+        <div class="tagline">Smart Procurement Platform</div>
+
+        <nav>
+            <button class="nav-item" data-target="request-section">
+                ▦ &nbsp; Requirement
+            </button>
+
+            <button class="nav-item active" data-target="comparison-section">
+                ⇄ &nbsp; Compare Quotes
+            </button>
+
+            <button class="nav-item" data-target="selection-section">
+                ✓ &nbsp; Selection
+            </button>
+        </nav>
+    </aside>
+
+    <main class="main">
+
+        <header class="header">
+            <div>
+                <h1>Quotation Comparison</h1>
+                <p class="subtitle">
+                    Compare supplier offers side by side and choose the right deal for your business.
+                </p>
+            </div>
+
+            <span class="demo-badge">DEMO DATA</span>
+        </header>
+
+        <div class="notice">
+            <strong>Prototype notice:</strong>
+            The supplier quotations below are illustrative examples for demonstration.
+            They are not real offers, verified suppliers or actual ratings.
+        </div>
+
+        <!-- Requirement summary -->
+        <section class="section" id="request-section">
+            <div class="section-heading">
+                <h2>Purchase Requirement</h2>
+                <p>The customer request being compared.</p>
+            </div>
+
+            <div class="card">
+                <div class="request-summary">
+                    <div>
+                        <div class="summary-label">Product</div>
+                        <div class="summary-value" id="request-product">
+                            Office Chairs
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="summary-label">Quantity</div>
+                        <div class="summary-value" id="request-quantity">
+                            50 units
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="summary-label">Estimated Budget</div>
+                        <div class="summary-value" id="request-budget">
+                            ₹75,000
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="summary-label">Delivery Location</div>
+                        <div class="summary-value" id="request-location">
+                            Bengaluru
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="summary-label">Required By</div>
+                        <div class="summary-value" id="request-deadline">
+                            15 Nov 2026
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="summary-label">Specifications</div>
+                        <div class="summary-value" id="request-specs">
+                            Adjustable ergonomic chairs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Compare supplier quotations -->
+        <section class="section" id="comparison-section">
+            <div class="section-heading">
+                <h2>Supplier Offers</h2>
+                <p>Compare total price, delivery, warranty and product details.</p>
+            </div>
+
+            <div class="toolbar">
+                <input
+                    type="search"
+                    id="supplier-search"
+                    placeholder="Search supplier..."
+                    aria-label="Search supplier"
+                >
+
+                <select id="sort-price" aria-label="Sort quotations">
+                    <option value="recommended">Sort by: Default</option>
+                    <option value="low">Lowest price first</option>
+                    <option value="high">Highest price first</option>
+                    <option value="delivery">Fastest delivery first</option>
+                </select>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Supplier</th>
+                            <th>Total Price</th>
+                            <th>Delivery</th>
+                            <th>Warranty</th>
+                            <th>Quantity</th>
+                            <th>Rating</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="quotation-rows"></tbody>
+                </table>
+            </div>
+
+            <div id="no-results" class="empty-state" hidden>
+                No supplier quotations match your search.
+            </div>
+
+            <div class="selection-panel" id="selection-panel" aria-live="polite">
+                <h3>Supplier Selected Successfully</h3>
+                <p id="selection-message"></p>
+                <p>
+                    Demo only: this selection is not sent to a supplier or saved in a database.
+                </p>
+                <button class="button button-light" id="clear-selection" style="margin-top:12px;">
+                    Change Selection
+                </button>
+            </div>
+        </section>
+
+        <footer>
+            ProCure © 2026 · Smart Procurement. Better Deals.<br>
+            Frontend prototype — backend integration pending.
+        </footer>
+
+    </main>
+</div>
+
+<script>
+const quotations = [
+    {
+        id: 101,
+        product: "Office Chairs",
+        supplier: "GreenLeaf Furnishings",
+        supplierType: "Furniture Supplier",
+        price: 68000,
+        deliveryDays: 7,
+        delivery: "7 days",
+        warranty: "1 year",
+        quantity: 50,
+        rating: null,
+        image: "",
+        notes: "Ergonomic design with adjustable height."
+    },
+    {
+        id: 102,
+        product: "Office Chairs",
+        supplier: "Metro Office Solutions",
+        supplierType: "Office Furniture",
+        price: 72000,
+        deliveryDays: 4,
+        delivery: "4 days",
+        warranty: "2 years",
+        quantity: 50,
+        rating: null,
+        image: "",
+        notes: "Adjustable chairs with reinforced base."
+    },
+    {
+        id: 103,
+        product: "Office Chairs",
+        supplier: "Prime Business Supplies",
+        supplierType: "Commercial Supplier",
+        price: 65000,
+        deliveryDays: 12,
+        delivery: "12 days",
+        warranty: "6 months",
+        quantity: 50,
+        rating: null,
+        image: "",
+        notes: "Standard office chairs with basic adjustments."
+    }
+];
+
+let selectedQuotationId = null;
+
+function formatCurrency(amount) {
+    return "₹" + Number(amount).toLocaleString("en-IN");
+}
+
+function renderQuotations() {
+    const tbody = document.getElementById("quotation-rows");
+    const search = document.getElementById("supplier-search")
+        .value.trim().toLowerCase();
+
+    const sort = document.getElementById("sort-price").value;
+
+    let filtered = quotations.filter(quote =>
+        quote.supplier.toLowerCase().includes(search) ||
+        quote.supplierType.toLowerCase().includes(search)
+    );
+
+    if (sort === "low") {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (sort === "high") {
+        filtered.sort((a, b) => b.price - a.price);
+    } else if (sort === "delivery") {
+        filtered.sort((a, b) => a.deliveryDays - b.deliveryDays);
+    }
+
+    const lowestPrice = Math.min(...quotations.map(q => q.price));
+
+    tbody.replaceChildren();
+
+    document.getElementById("no-results").hidden = filtered.length > 0;
+
+    filtered.forEach(quote => {
+        const row = document.createElement("tr");
+
+        // Product image
+        const imageCell = document.createElement("td");
+
+        if (quote.image) {
+            const image = document.createElement("img");
+            image.className = "product-image";
+            image.src = quote.image;
+            image.alt = quote.product;
+            imageCell.appendChild(image);
+        } else {
+            const placeholder = document.createElement("div");
+            placeholder.className = "no-image";
+            placeholder.textContent = "No image";
+            imageCell.appendChild(placeholder);
+        }
+
+        // Supplier
+        const supplierCell = document.createElement("td");
+
+        const supplierName = document.createElement("div");
+        supplierName.className = "supplier-name";
+        supplierName.textContent = quote.supplier;
+
+        const supplierType = document.createElement("div");
+        supplierType.className = "supplier-type";
+        supplierType.textContent = quote.supplierType;
+
+        supplierCell.append(supplierName, supplierType);
+
+        // Price
+        const priceCell = document.createElement("td");
+
+        const price = document.createElement("div");
+        price.className = "price";
+        price.textContent = formatCurrency(quote.price);
+
+        priceCell.appendChild(price);
+
+        if (quote.price === lowestPrice) {
+            const tag = document.createElement("span");
+            tag.className = "lowest-tag";
+            tag.textContent = "Lowest price";
+            priceCell.appendChild(tag);
+        }
+
+        // Other details
+        const deliveryCell = document.createElement("td");
+        deliveryCell.textContent = quote.delivery;
+
+        const warrantyCell = document.createElement("td");
+        warrantyCell.textContent = quote.warranty;
+
+        const quantityCell = document.createElement("td");
+        quantityCell.textContent = quote.quantity + " units";
+
+        const ratingCell = document.createElement("td");
+        ratingCell.className = "rating";
+        ratingCell.textContent = quote.rating === null
+            ? "Not rated"
+            : "★ " + quote.rating;
+
+        // Selection
+        const actionCell = document.createElement("td");
+        const button = document.createElement("button");
+
+        button.className = "button " +
+            (selectedQuotationId === quote.id
+                ? "button-light"
+                : "button-primary");
+
+        button.textContent = selectedQuotationId === quote.id
+            ? "Selected"
+            : "Select";
+
+        button.addEventListener("click", () => selectQuotation(quote.id));
+
+        actionCell.appendChild(button);
+
+        row.append(
+            imageCell,
+            supplierCell,
+            priceCell,
+            deliveryCell,
+            warrantyCell,
+            quantityCell,
+            ratingCell,
+            actionCell
+        );
+
+        tbody.appendChild(row);
+    });
+}
+
+function selectQuotation(id) {
+    const quote = quotations.find(item => item.id === id);
+
+    if (!quote) return;
+
+    selectedQuotationId = id;
+
+    document.getElementById("selection-message").textContent =
+        quote.supplier + " has been selected in this demo at " +
+        formatCurrency(quote.price) + ", with delivery in " +
+        quote.delivery + " and a warranty of " + quote.warranty + ".";
+
+    document.getElementById("selection-panel").style.display = "block";
+
+    renderQuotations();
+
+    document.getElementById("selection-panel").scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+}
+
+document.getElementById("supplier-search")
+    .addEventListener("input", renderQuotations);
+
+document.getElementById("sort-price")
+    .addEventListener("change", renderQuotations);
+
+document.getElementById("clear-selection").addEventListener("click", () => {
+    selectedQuotationId = null;
+    document.getElementById("selection-panel").style.display = "none";
+    renderQuotations();
+});
+
+document.querySelectorAll(".nav-item").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelectorAll(".nav-item").forEach(item =>
+            item.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        document.getElementById(button.dataset.target).scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+});
+
+renderQuotations();
+</script>
+
+</body>
+</html>
